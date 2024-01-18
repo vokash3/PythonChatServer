@@ -50,4 +50,5 @@ class ChatServer:
 
 
 if __name__ == '__main__':
+    # для подключения клиентом "nc/telnet 127.0.0.1 8888
     asyncio.run(ChatServer().main())
