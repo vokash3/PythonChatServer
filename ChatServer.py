@@ -6,14 +6,19 @@ from ConnectionPool import ConnectionPool
 
 class ChatServer:
 
+    def __init__(self):
+        self.connection_pool = ConnectionPool()
+
     async def handle_connection(self, reader: StreamReader, writer: StreamWriter):
-        writer.write("Hello! Type smt!".encode())
+        writer.write("Choose your Nickname: ".encode())
 
-        data = await reader.readuntil(b"\n")
+        response = await reader.readuntil(b"\n")
+        writer.nickname = response.decode().strip()
 
-        writer.write("U sent: ".encode() + data)
+        self.connection_pool.add_new_user_to_pool(writer)
+        self.connection_pool.send_welcome_message(writer)
+
         await writer.drain()
-
         writer.close()
         await writer.wait_closed()
 
@@ -25,5 +30,4 @@ class ChatServer:
 
 
 if __name__ == '__main__':
-    connection_pool = ConnectionPool()
     asyncio.run(ChatServer().main())
