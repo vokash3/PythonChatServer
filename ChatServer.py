@@ -1,6 +1,8 @@
 import asyncio
 from asyncio import StreamReader, StreamWriter
 
+from ConnectionPool import ConnectionPool
+
 
 class ChatServer:
 
@@ -23,4 +25,5 @@ class ChatServer:
 
 
 if __name__ == '__main__':
+    connection_pool = ConnectionPool()
     asyncio.run(ChatServer().main())
