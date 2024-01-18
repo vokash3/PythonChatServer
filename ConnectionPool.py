@@ -36,7 +36,7 @@ class ConnectionPool:
         self.broadcast(writer, f"{writer.nickname} said: {message}")
 
     def get_users_list(self, writer: StreamWriter):
-        message = "===\n"
+        message: str = "===\n"
         message += "Currently connected users:"
 
         for user in self.connection_pool:
@@ -45,7 +45,7 @@ class ConnectionPool:
             else:
                 message += f"\n - {user.nickname}"
 
-        message = "===\n"
+        message += "\n===\n"
         writer.write(f"{message}\n".encode())
 
     def add_new_user_to_pool(self, writer):
